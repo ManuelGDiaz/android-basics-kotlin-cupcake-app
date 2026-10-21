@@ -17,12 +17,14 @@ package com.example.cupcake.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+
 import androidx.lifecycle.ViewModel
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+
+import androidx.lifecycle.map
 
 /** Price for a single cupcake */
 private const val PRICE_PER_CUPCAKE = 2.00
@@ -53,7 +55,7 @@ class OrderViewModel : ViewModel() {
 
     // Price of the order so far
     private val _price = MutableLiveData<Double>()
-    val price: LiveData<String> = Transformations.map(_price) {
+    val price: LiveData<String> = _price.map {
         // Format the price into the local currency and return this as LiveData<String>
         NumberFormat.getCurrencyInstance().format(it)
     }
